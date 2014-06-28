@@ -2,11 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
  
-
-struct Bombas{
-    time_t now;
-};
-
 int main(){
 
     time_t now;
@@ -17,21 +12,22 @@ int main(){
 
     beg = *localtime(&now);
 
-    beg.tm_sec = beg.tm_sec;
+    beg.tm_sec = beg.tm_sec + 4;
     beg.tm_hour = beg.tm_hour;
     beg.tm_min = beg.tm_min;
+    beg.tm_mday = beg.tm_mday;
 
     double sc = difftime(mktime(&beg), now);
 
     fe = mktime(&beg);
 
 	//printf("now: %s \n", asctime(localtime(&now)));
-   // printf("now: %ld \n", beg);	
+    printf("now: %ld \n", beg);	
 
 
 	printf("now: %s \n", asctime(localtime(&now)));
 
-	printf("end: %s\n", asctime(localtime(&fe)));
+//	printf("end: %s\n", asctime(localtime(&fe)));
 
 //	printf("second: %lf \n", sc);
 //    }
