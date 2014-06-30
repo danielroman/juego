@@ -10,6 +10,7 @@
 #define ESC 27
 #define SPC 32
 #define ALCANCE 4 //sirve para delimitar el alcance de la bomba
+#define TIEMPO 4 
 
 
 //http://www.openvim.com/tutorial.html
@@ -122,12 +123,11 @@ int temporizador(char tablero[FILAS][COL], struct Bomba *bombas, int seg){
 
 void poner_bomba(char tablero[FILAS][COL], struct Coordenadas *jugador, struct Bomba *bombas, int seg){
 
-
     if (tablero[jugador->y + 1][jugador->x] != 'T' && tablero[jugador->y + 1][jugador->x] != 'I'){
 	tablero[jugador->y + 1][jugador->x] = 'X';
 	bombas->y = jugador->y + 1;
 	bombas->x = jugador->x;
-	bombas->end = seg + 4;
+	bombas->end = seg + TIEMPO;
     }
 }
 
@@ -176,7 +176,7 @@ int main(int argc, char *argv[]){
     struct Bomba bombas;
     char tablero[FILAS][COL];
     int user_input;
-    int  min, seg, miliseg;
+    int  min, seg, miliseg, seg2;
 
     min = 0;
     seg = 0;
@@ -195,6 +195,7 @@ int main(int argc, char *argv[]){
 
 	if(miliseg == 11){
 	    seg++;
+	    seg2++;
 	    miliseg = 0;
 	}
 
@@ -209,13 +210,12 @@ int main(int argc, char *argv[]){
 	    min = 0;
 	}
 
-	mover(user_input, &jugador, tablero, &bombas, seg);
-	temporizador(tablero, &bombas, seg);
+	mover(user_input, &jugador, tablero, &bombas, seg2);
+	temporizador(tablero, &bombas, seg2);
 	pintar_mapa(tablero, jugador);
-	mvprintw(26, 2, "%d:%d", min, seg);
+	mvprintw(26, 2, "%d:%d:%d", min, seg, miliseg);
 	refresh();
     }
     endwin();
     return EXIT_SUCCESS;
-
 }
